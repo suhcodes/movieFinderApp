@@ -1,65 +1,42 @@
 import { apiClient } from '@/lib/api/client'
+import { assertOmdbSuccess } from '@/lib/api/omdb-error'
 import type { Movie } from '@/features/movie/types'
-
-interface OmdbDetailResponse {
-  Title: string
-  Year: string
-  imdbID: string
-  Type: string
-  Poster: string
-  Plot: string
-  imdbRating: string
-  imdbVotes: string
-  Runtime: string
-  Genre: string
-  Language: string
-  Country: string
-  Awards: string
-  Director: string
-  Writer: string
-  Actors: string
-  Released: string
-  BoxOffice: string
-  DVD: string
-  Website: string
-  Metascore: string
-  Ratings: { Source: string; Value: string }[]
-  Response: 'True' | 'False'
-  Error?: string
-}
+import { omdbDetailResponseSchema } from '../schemas/movie-schemas'
 
 const na = (value: string): string | undefined => (value === 'N/A' ? undefined : value)
 
 export const movieApi = {
   getById: async (id: string): Promise<Movie> => {
-    const { data } = await apiClient.get<OmdbDetailResponse>('/', {
+    const { data } = await apiClient.get<unknown>('/', {
       params: { i: id, plot: 'full', r: 'json' },
     })
+    const parsed = omdbDetailResponseSchema.parse(data)
+    assertOmdbSuccess(parsed)
 
-    const rtRating = data.Ratings?.find((r) => r.Source === 'Rotten Tomatoes')
+    const rtRating = parsed.Ratings?.find((r) => r.Source === 'Rotten Tomatoes')
 
     return {
-      id: data.imdbID,
-      title: data.Title,
-      year: data.Year,
-      posterPath: data.Poster !== 'N/A' ? data.Poster : null,
-      type: na(data.Type),
-      overview: na(data.Plot),
-      voteAverage: data.imdbRating !== 'N/A' ? parseFloat(data.imdbRating) : undefined,
-      votes: na(data.imdbVotes),
-      runtime: na(data.Runtime),
-      language: na(data.Language),
-      country: na(data.Country),
-      genres: data.Genre !== 'N/A' ? data.Genre.split(', ') : undefined,
-      awards: na(data.Awards),
-      director: na(data.Director),
-      writers: na(data.Writer),
-      actors: na(data.Actors),
-      released: na(data.Released),
-      boxOffice: na(data.BoxOffice),
-      dvd: na(data.DVD),
+      id: parsed.imdbID,
+      title: parsed.Title,
+      year: parsed.Year,
+      posterPath: parsed.Poster !== 'N/A' ? parsed.Poster : null,
+      type: na(parsed.Type),
+      overview: na(parsed.Plot),
+      voteAverage: parsed.imdbRating !== 'N/A' ? parseFloat(parsed.imdbRating) : undefined,
+      votes: na(parsed.imdbVotes),
+      runtime: na(parsed.Runtime),
+      language: na(parsed.Language),
+      country: na(parsed.Country),
+      genres: parsed.Genre !== 'N/A' ? parsed.Genre.split(', ') : undefined,
+      awards: na(parsed.Awards),
+      director: na(parsed.Director),
+      writers: na(parsed.Writer),
+      actors: na(parsed.Actors),
+      released: na(parsed.Released),
+      boxOffice: na(parsed.BoxOffice),
+      dvd: na(parsed.DVD),
       rottenTomatoes: rtRating?.Value,
-      metacritic: na(data.Metascore),
+      metacritic: na(parsed.Metascore),
     }
   },
 }

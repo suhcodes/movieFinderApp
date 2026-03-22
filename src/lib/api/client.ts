@@ -1,14 +1,15 @@
 import axios from 'axios'
+import { env } from '@/lib/env'
 
 export const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL as string | undefined,
+  baseURL: env.apiBaseUrl,
   headers: { 'Content-Type': 'application/json' },
 })
 
 apiClient.interceptors.request.use((config) => {
   config.params = {
     ...config.params,
-    apikey: import.meta.env.VITE_OMDB_API_KEY as string | undefined,
+    apikey: env.omdbApiKey,
   }
   return config
 })

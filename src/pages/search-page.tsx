@@ -15,9 +15,19 @@ export function SearchPage() {
     if (page !== 1) setPageParam('1')
   }
 
-  const { data, isLoading } = useMovieSearch(q, page)
+  const { data, isLoading, isError, error } = useMovieSearch(q, page)
   const showLoading = useMinLoading(isLoading)
   const totalPages = Math.ceil((data?.total ?? 0) / 10)
+
+  if (isError) {
+    return (
+      <div className="mx-auto w-full px-8 py-6">
+        <p className="text-sm text-destructive">
+          {error instanceof Error ? error.message : 'Something went wrong.'}
+        </p>
+      </div>
+    )
+  }
 
   return (
     <div className="mx-auto w-full px-8 py-6">

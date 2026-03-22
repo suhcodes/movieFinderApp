@@ -1,20 +1,7 @@
 import { apiClient } from '@/lib/api/client'
+import { assertOmdbSuccess } from '@/lib/api/omdb-error'
 import type { Movie } from '@/features/movie/types'
-
-interface OmdbSearchItem {
-  Title: string
-  Year: string
-  imdbID: string
-  Type: string
-  Poster: string
-}
-
-interface OmdbSearchResponse {
-  Search?: OmdbSearchItem[]
-  totalResults?: string
-  Response: 'True' | 'False'
-  Error?: string
-}
+import { omdbSearchResponseSchema, type OmdbSearchItem } from '../schemas/search-schemas'
 
 function toMovie(item: OmdbSearchItem): Movie {
   return {
@@ -28,13 +15,14 @@ function toMovie(item: OmdbSearchItem): Movie {
 
 export const searchApi = {
   search: async (query: string, page = 1) => {
-    const { data } = await apiClient.get<OmdbSearchResponse>('/', {
+    const { data } = await apiClient.get<unknown>('/', {
       params: { s: query, page },
     })
-    if (data.Response === 'False') return { movies: [], total: 0 }
+    const parsed = omdbSearchResponseSchema.parse(data)
+    assertOmdbSuccess(parsed)
     return {
-      movies: (data.Search ?? []).map(toMovie),
-      total: parseInt(data.totalResults ?? '0', 10),
+      movies: (parsed.Search ?? []).map(toMovie),
+      total: parseInt(parsed.totalResults ?? '0', 10),
     }
   },
 }
