@@ -17,16 +17,16 @@ export function HomePage() {
   return (
     <>
       <div className="flex-1" />
-      <div className="flex flex-col items-center gap-7">
+      <div className="flex flex-col items-center gap-7 p-4">
         <div style={{ viewTransitionName: 'moovle-logo' }}>
           <Logo />
         </div>
-        <div style={{ viewTransitionName: 'moovle-searchbar' }}>
+        <div className="w-full" style={{ viewTransitionName: 'moovle-searchbar' }}>
           <SearchBar
             value={query}
             onChange={setQuery}
             onSearch={handleSearch}
-            className="h-9 md:h-11"
+            className="h-9 w-full max-w-lg mx-auto md:h-11"
           />
         </div>
         <div className="flex items-center gap-4">

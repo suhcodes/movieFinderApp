@@ -11,6 +11,10 @@ const cardStyles = {
   spacing: 'gap-5 p-4',
 }
 
+const posterStyles = {
+  width: 'w-[150px] m-auto md:w-full',
+}
+
 const join = (styles: Record<string, string>) => Object.values(styles).join(' ')
 
 interface MovieResultItemProps {
@@ -22,7 +26,11 @@ export function MovieResultItem({ movie }: MovieResultItemProps) {
 
   return (
     <div className={join(cardStyles)}>
-      <MoviePoster posterPath={movie.posterPath} title={movie.title} />
+      <MoviePoster
+        posterPath={movie.posterPath}
+        title={movie.title}
+        className={join(posterStyles)}
+      />
       <MovieDescription
         title={movie.title}
         type={movie.type}
