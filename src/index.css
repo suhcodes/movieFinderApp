@@ -7,6 +7,18 @@
 
 @theme {
   --animate-logo-pulse: logo-pulse 2.8s ease-in-out infinite;
+  --animate-card-enter: card-enter 350ms ease-out both;
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes logo-pulse {

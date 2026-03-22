@@ -34,8 +34,14 @@ export function MovieResultList({
         <p className="mb-2 text-sm text-muted-foreground">About {total.toLocaleString()} results</p>
       )}
       <div className="flex flex-col gap-3">
-        {movies.map((movie) => (
-          <MovieResultItem key={movie.id} movie={movie} />
+        {movies.map((movie, i) => (
+          <div
+            key={movie.id}
+            className="animate-card-enter"
+            style={{ animationDelay: `${i * 50}ms` }}
+          >
+            <MovieResultItem movie={movie} />
+          </div>
         ))}
       </div>
       {onPageChange && (

@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { useQueryState } from 'nuqs'
 import { MovieResultList } from '@/features/movies/components/movie-result-list'
 import { useMovieSearch } from '@/lib/queries/use-movie-search'
+import { useMinLoading } from '@/lib/hooks/use-min-loading'
 
 export function SearchPage() {
   const [q] = useQueryState('q', { defaultValue: '' })
@@ -15,13 +16,14 @@ export function SearchPage() {
   }
 
   const { data, isLoading } = useMovieSearch(q, page)
+  const showLoading = useMinLoading(isLoading)
   const totalPages = Math.ceil((data?.total ?? 0) / 10)
 
   return (
     <div className="mx-auto w-full px-8 py-6">
       <MovieResultList
         movies={data?.movies ?? []}
-        isLoading={isLoading}
+        isLoading={showLoading}
         total={data?.total}
         page={page}
         totalPages={totalPages}
