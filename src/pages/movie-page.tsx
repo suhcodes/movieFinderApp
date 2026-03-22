@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useQueryState } from 'nuqs'
 import { ArrowLeft } from 'lucide-react'
+import { Helmet } from 'react-helmet-async'
 import { useMovieDetail } from '@/lib/queries/use-movie-detail'
 import { MoviePoster, ErrorDisplay } from '@/components/shared'
 import { MovieDetailInfo } from '@/features/movie/components/movie-detail-info'
@@ -50,12 +51,34 @@ export function MoviePage() {
       {isLoading ? (
         <Loader className="flex-1 py-20" />
       ) : movie ? (
-        <div className={join(contentStyles)}>
-          <div className={join(posterWrapperStyles)}>
-            <MoviePoster posterPath={movie.posterPath} title={movie.title} />
+        <>
+          <Helmet>
+            <title>
+              {movie.title} ({movie.year}) — Movie Finder
+            </title>
+            <meta name="description" content={movie.overview ?? `${movie.title} (${movie.year})`} />
+            <meta property="og:title" content={`${movie.title} (${movie.year})`} />
+            <meta
+              property="og:description"
+              content={movie.overview ?? `${movie.title} (${movie.year})`}
+            />
+            {movie.posterPath && <meta property="og:image" content={movie.posterPath} />}
+            <meta property="og:type" content="video.movie" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content={`${movie.title} (${movie.year})`} />
+            <meta
+              name="twitter:description"
+              content={movie.overview ?? `${movie.title} (${movie.year})`}
+            />
+            {movie.posterPath && <meta name="twitter:image" content={movie.posterPath} />}
+          </Helmet>
+          <div className={join(contentStyles)}>
+            <div className={join(posterWrapperStyles)}>
+              <MoviePoster posterPath={movie.posterPath} title={movie.title} />
+            </div>
+            <MovieDetailInfo movie={movie} />
           </div>
-          <MovieDetailInfo movie={movie} />
-        </div>
+        </>
       ) : (
         <div className="flex flex-1 items-center justify-center text-muted-foreground">
           Movie not found.
