@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useQueryState } from 'nuqs'
 import { ArrowLeft } from 'lucide-react'
 import { useMovieDetail } from '@/lib/queries/use-movie-detail'
-import { MoviePoster } from '@/features/movie/components/movie-poster'
+import { MoviePoster } from '@/components/shared/movie-poster'
 import { MovieDetailInfo } from '@/features/movie/components/movie-detail-info'
 import { Loader } from '@/components/ui/loader'
 import { Button } from '@/components/ui/button'
@@ -17,7 +17,7 @@ const contentStyles = {
 }
 
 const posterWrapperStyles = {
-  layout: 'w-full md:w-56 shrink-0',
+  layout: 'w-full md:w-[300px] shrink-0',
 }
 
 const join = (styles: Record<string, string>) => Object.values(styles).join(' ')
@@ -51,13 +51,7 @@ export function MoviePage() {
           <div className={join(posterWrapperStyles)}>
             <MoviePoster posterPath={movie.posterPath} title={movie.title} />
           </div>
-          <MovieDetailInfo
-            title={movie.title}
-            year={movie.year}
-            type={movie.type}
-            overview={movie.overview}
-            voteAverage={movie.voteAverage}
-          />
+          <MovieDetailInfo movie={movie} />
         </div>
       ) : (
         <div className="flex flex-1 items-center justify-center text-muted-foreground">

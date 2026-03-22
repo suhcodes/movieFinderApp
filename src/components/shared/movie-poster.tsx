@@ -8,7 +8,7 @@ const posterContainerStyles = {
 }
 
 const placeholderStyles = {
-  layout: 'flex min-h-[412px] h-full w-full items-center justify-center',
+  layout: 'flex h-full w-full items-center justify-center',
 }
 
 const join = (styles: Record<string, string>) => Object.values(styles).join(' ')

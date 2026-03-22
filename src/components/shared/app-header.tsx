@@ -1,19 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQueryState } from 'nuqs'
 import { Logo } from '@/components/shared/logo'
 import { SearchBar } from '@/features/search/components/search-bar'
-import { useDebounce } from '@/lib/hooks/use-debounce'
 
 export function AppHeader() {
   const navigate = useNavigate()
   const [q, setQ] = useQueryState('q', { defaultValue: '' })
   const [inputValue, setInputValue] = useState(q)
-  const debouncedValue = useDebounce(inputValue, 1000)
-
-  useEffect(() => {
-    setQ(debouncedValue.trim() || null)
-  }, [debouncedValue])
 
   function handleSearch() {
     if (inputValue.trim()) {

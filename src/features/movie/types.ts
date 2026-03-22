@@ -6,4 +6,18 @@ export interface Movie {
   type?: string
   overview?: string
   voteAverage?: number
+  votes?: string
+  runtime?: string
+  language?: string
+  country?: string
+  genres?: string[]
+  awards?: string
+  director?: string
+  writers?: string
+  actors?: string
+  released?: string
+  boxOffice?: string
+  dvd?: string
+  rottenTomatoes?: string
+  metacritic?: string
 }

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import type { Movie } from '@/features/movie/types'
-import { MoviePoster } from '@/features/movie/components/movie-poster'
+import { MoviePoster } from '@/components/shared/movie-poster'
 import { MovieDescription } from './movie-description'
 
 const cardStyles = {
