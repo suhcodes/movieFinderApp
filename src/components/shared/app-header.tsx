@@ -1,24 +1,11 @@
-import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useQueryState } from 'nuqs'
 import { Logo } from '@/components/shared/logo'
 import { SearchBar } from '@/features/search/components/search-bar'
+import { useHeaderSearch } from '@/lib/hooks/use-header-search'
 
 export function AppHeader() {
   const navigate = useNavigate()
-  const [q, setQ] = useQueryState('q', { defaultValue: '' })
-  const [inputValue, setInputValue] = useState(q)
-
-  useEffect(() => {
-    setInputValue(q)
-  }, [q])
-
-  function handleSearch() {
-    if (inputValue.trim()) {
-      setQ(inputValue.trim())
-      navigate(`/search?q=${encodeURIComponent(inputValue.trim())}`)
-    }
-  }
+  const { inputValue, setInputValue, handleSearch } = useHeaderSearch()
 
   return (
     <header className="flex h-16 shrink-0 items-center gap-4 border-b border-border px-8">

@@ -151,8 +151,7 @@ Feature-based (domain-driven) layout:
 src/
 ├── components/
 │   ├── ui/              # shadcn primitives (auto-generated, do not edit manually)
-│   ├── shared/          # Layouts, nav, error boundaries
-│   └── features/        # Feature-scoped presentational components
+│   └── shared/          # Layouts, nav, reusable cross-feature components
 ├── features/            # Feature slices — each self-contained
 │   └── <feature>/
 │       ├── components/
@@ -161,12 +160,13 @@ src/
 │       ├── schemas/
 │       └── types.ts
 ├── lib/
-│   ├── api/             # Axios instance + interceptors (client.ts)
+│   ├── api/             # Axios instance + interceptors (client.ts, omdb-error.ts)
+│   ├── hooks/           # Shared custom hooks (use-debounce, use-min-loading, etc.)
 │   ├── queries/         # TanStack Query key factories + hooks
-│   ├── stores/          # Zustand stores
-│   └── utils/           # Shared helpers
-├── pages/               # Route-level components (orchestration only)
-└── types/               # Global TS types
+│   ├── stores/          # Zustand stores (add here when needed)
+│   ├── env.ts           # Runtime environment variable validation
+│   └── utils.ts         # cn() utility (clsx + tailwind-merge)
+└── pages/               # Route-level components (orchestration only)
 ```
 
 ## Component Patterns
