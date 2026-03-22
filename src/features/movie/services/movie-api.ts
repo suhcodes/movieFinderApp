@@ -28,7 +28,7 @@ export const movieApi = {
       runtime: na(parsed.Runtime),
       language: na(parsed.Language),
       country: na(parsed.Country),
-      genres: parsed.Genre !== 'N/A' ? parsed.Genre.split(', ') : undefined,
+      genres: parsed.Genre && parsed.Genre !== 'N/A' ? parsed.Genre.split(', ') : undefined,
       awards: na(parsed.Awards),
       director: na(parsed.Director),
       writers: na(parsed.Writer),

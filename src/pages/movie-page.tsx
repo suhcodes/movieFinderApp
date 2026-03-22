@@ -16,7 +16,7 @@ const contentStyles = {
 }
 
 const posterWrapperStyles = {
-  layout: 'w-full md:w-[300px] shrink-0',
+  layout: 'w-[150px] mx-auto md:w-[300px] shrink-0',
 }
 
 const join = (styles: Record<string, string>) => Object.values(styles).join(' ')
@@ -24,12 +24,20 @@ const join = (styles: Record<string, string>) => Object.values(styles).join(' ')
 export function MoviePage() {
   const navigate = useNavigate()
   const [imdbID] = useQueryState('imdbID', { defaultValue: '' })
-  const { data: movie, isLoading } = useMovieDetail(imdbID)
+  const { data: movie, isLoading, isError, error } = useMovieDetail(imdbID)
 
   if (!imdbID) {
     return (
       <div className="flex flex-1 items-center justify-center text-muted-foreground">
         Movie not found.
+      </div>
+    )
+  }
+
+  if (isError) {
+    return (
+      <div className="flex flex-1 items-center justify-center text-destructive text-sm">
+        {error instanceof Error ? error.message : 'Failed to load movie.'}
       </div>
     )
   }

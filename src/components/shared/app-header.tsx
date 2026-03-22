@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQueryState } from 'nuqs'
 import { Logo } from '@/components/shared/logo'
@@ -8,6 +8,10 @@ export function AppHeader() {
   const navigate = useNavigate()
   const [q, setQ] = useQueryState('q', { defaultValue: '' })
   const [inputValue, setInputValue] = useState(q)
+
+  useEffect(() => {
+    setInputValue(q)
+  }, [q])
 
   function handleSearch() {
     if (inputValue.trim()) {

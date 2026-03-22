@@ -2,6 +2,8 @@ import { Loader, Pagination } from '@/components/ui'
 import type { Movie } from '@/features/movie/types'
 import { MovieResultItem } from './movie-result-item'
 
+const cardWrapperClass = 'animate-card-enter'
+
 interface MovieResultListProps {
   movies: Movie[]
   isLoading: boolean
@@ -27,12 +29,6 @@ export function MovieResultList({
     return <p className="text-sm text-muted-foreground">No results found.</p>
   }
 
-  const cardWrapperStyles = {
-    animation: 'animate-card-enter',
-  }
-
-  const join = (styles: Record<string, string>) => Object.values(styles).join(' ')
-
   return (
     <div className="flex flex-col gap-2">
       {total !== undefined && (
@@ -42,7 +38,7 @@ export function MovieResultList({
         {movies.map((movie, i) => (
           <div
             key={movie.id}
-            className={join(cardWrapperStyles)}
+            className={cardWrapperClass}
             style={{ animationDelay: `${i * 50}ms` }}
           >
             <MovieResultItem movie={movie} />
