@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 
 const loaderStyles = {
-  layout: 'flex items-center justify-center',
+  layout: 'flex flex-1 items-center justify-center',
 }
 
 const logoStyles = {

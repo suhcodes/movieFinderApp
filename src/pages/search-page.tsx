@@ -25,7 +25,7 @@ export function SearchPage() {
   }
 
   return (
-    <div className="mx-auto w-full px-8 py-6">
+    <div className="mx-auto flex w-full flex-1 flex-col px-8 py-6">
       <MovieResultList
         movies={data?.movies ?? []}
         isLoading={showLoading}

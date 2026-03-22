@@ -1,14 +1,17 @@
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQueryState } from 'nuqs'
 import { ArrowLeft } from 'lucide-react'
-import { Helmet } from 'react-helmet-async'
 import { useMovieDetail } from '@/lib/queries/use-movie-detail'
+import { useMinLoading } from '@/lib/hooks/use-min-loading'
 import { MoviePoster, ErrorDisplay } from '@/components/shared'
 import { MovieDetailInfo } from '@/features/movie/components/movie-detail-info'
+import { MovieSeo } from '@/features/movie/components/movie-seo'
 import { Loader, Button } from '@/components/ui'
+import { cn } from '@/lib/utils'
 
 const pageStyles = {
-  layout: 'flex flex-col gap-6',
+  layout: 'flex flex-1 flex-col gap-6',
   spacing: 'px-4 py-6 md:px-8',
 }
 
@@ -26,6 +29,11 @@ export function MoviePage() {
   const navigate = useNavigate()
   const [imdbID] = useQueryState('imdbID', { defaultValue: '' })
   const { data: movie, isLoading, isError, error } = useMovieDetail(imdbID)
+  const showLoading = useMinLoading(isLoading)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   if (!imdbID) {
     return (
@@ -48,31 +56,12 @@ export function MoviePage() {
         </Button>
       </div>
 
-      {isLoading ? (
-        <Loader className="flex-1 py-20" />
+      {showLoading ? (
+        <Loader />
       ) : movie ? (
         <>
-          <Helmet>
-            <title>
-              {movie.title} ({movie.year}) — Movie Finder
-            </title>
-            <meta name="description" content={movie.overview ?? `${movie.title} (${movie.year})`} />
-            <meta property="og:title" content={`${movie.title} (${movie.year})`} />
-            <meta
-              property="og:description"
-              content={movie.overview ?? `${movie.title} (${movie.year})`}
-            />
-            {movie.posterPath && <meta property="og:image" content={movie.posterPath} />}
-            <meta property="og:type" content="video.movie" />
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" content={`${movie.title} (${movie.year})`} />
-            <meta
-              name="twitter:description"
-              content={movie.overview ?? `${movie.title} (${movie.year})`}
-            />
-            {movie.posterPath && <meta name="twitter:image" content={movie.posterPath} />}
-          </Helmet>
-          <div className={join(contentStyles)}>
+          <MovieSeo movie={movie} />
+          <div className={cn(join(contentStyles), 'animate-card-enter')}>
             <div className={join(posterWrapperStyles)}>
               <MoviePoster posterPath={movie.posterPath} title={movie.title} />
             </div>

@@ -7,7 +7,7 @@ export function RootLayout() {
   const isMovie = useMatch('/movie')
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-dvh flex-col">
       {(isSearch || isMovie) && <AppHeader />}
       <main className="flex flex-1 flex-col">
         <Outlet />

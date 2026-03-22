@@ -22,7 +22,7 @@ export function MovieResultList({
   onPageChange,
 }: MovieResultListProps) {
   if (isLoading) {
-    return <Loader className="py-16" />
+    return <Loader />
   }
 
   if (movies.length === 0) {
