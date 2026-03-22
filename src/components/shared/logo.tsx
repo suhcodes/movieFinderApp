@@ -21,14 +21,14 @@ export function Logo({
   const icon = showIcon ? (
     <div
       className={cn(
-        'flex items-center justify-center bg-foreground transition-all duration-300',
-        isSmall ? 'h-8 w-8 rounded-lg' : 'h-16 w-16 rounded-2xl',
+        'flex items-center justify-center bg-foreground transition-all duration-300 h-8 w-8 rounded-lg',
+        !isSmall && 'md:h-16 md:w-16 md:rounded-2xl',
       )}
     >
       <Play
         className={cn(
-          'fill-background text-background transition-all duration-300',
-          isSmall ? 'h-4 w-4' : 'h-7 w-7',
+          'fill-background text-background transition-all duration-300 h-4 w-4',
+          !isSmall && 'md:h-7 md:w-7',
         )}
       />
     </div>
@@ -36,14 +36,12 @@ export function Logo({
 
   const text = showText ? (
     <span
-      className="text-foreground transition-all duration-300"
-      style={{
-        fontFamily: "'Outfit', sans-serif",
-        fontSize: isSmall ? 24 : 64,
-        fontWeight: 800,
-        letterSpacing: isSmall ? -1 : -2,
-        lineHeight: 1.1,
-      }}
+      className={cn(
+        'text-foreground transition-all duration-300',
+        'font-extrabold leading-[1.1] font-[Outfit]',
+        'text-[24px] tracking-[-1px]',
+        isSmall ? 'hidden md:block' : 'md:text-6xl md:tracking-[-2px]',
+      )}
     >
       moovle
     </span>

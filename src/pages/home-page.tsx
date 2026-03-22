@@ -22,7 +22,12 @@ export function HomePage() {
           <Logo />
         </div>
         <div style={{ viewTransitionName: 'moovle-searchbar' }}>
-          <SearchBar value={query} onChange={setQuery} onSearch={handleSearch} />
+          <SearchBar
+            value={query}
+            onChange={setQuery}
+            onSearch={handleSearch}
+            className="h-9 md:h-11"
+          />
         </div>
         <div className="flex items-center gap-4">
           <Button onClick={handleSearch}>Moovle Search</Button>

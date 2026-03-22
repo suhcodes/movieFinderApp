@@ -29,7 +29,7 @@ const buttonVariantStyles: Record<ButtonVariant, Record<string, string>> = {
   },
   outline: {
     border: 'border-border',
-    color: 'bg-background',
+    color: 'bg-transparent',
     hover:
       'hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground',
     active: 'active:bg-muted/80',

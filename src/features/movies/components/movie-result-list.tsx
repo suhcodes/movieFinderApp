@@ -28,16 +28,22 @@ export function MovieResultList({
     return <p className="text-sm text-muted-foreground">No results found.</p>
   }
 
+  const cardWrapperStyles = {
+    animation: 'animate-card-enter',
+  }
+
+  const join = (styles: Record<string, string>) => Object.values(styles).join(' ')
+
   return (
     <div className="flex flex-col gap-2">
       {total !== undefined && (
         <p className="mb-2 text-sm text-muted-foreground">About {total.toLocaleString()} results</p>
       )}
-      <div className="flex flex-col gap-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {movies.map((movie, i) => (
           <div
             key={movie.id}
-            className="animate-card-enter"
+            className={join(cardWrapperStyles)}
             style={{ animationDelay: `${i * 50}ms` }}
           >
             <MovieResultItem movie={movie} />
