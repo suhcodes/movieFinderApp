@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Logo } from '@/components/shared/logo'
+import { Logo } from '@/components/shared'
 import { SearchBar } from '@/features/search/components/search-bar'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui'
 
 export function HomePage() {
   const [query, setQuery] = useState('')

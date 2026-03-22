@@ -3,7 +3,8 @@ import { assertOmdbSuccess } from '@/lib/api/omdb-error'
 import type { Movie } from '@/features/movie/types'
 import { omdbDetailResponseSchema } from '../schemas/movie-schemas'
 
-const na = (value: string): string | undefined => (value === 'N/A' ? undefined : value)
+const na = (value: string | undefined): string | undefined =>
+  value === undefined || value === 'N/A' ? undefined : value
 
 export const movieApi = {
   getById: async (id: string): Promise<Movie> => {

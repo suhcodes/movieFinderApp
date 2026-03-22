@@ -2,10 +2,9 @@ import { useNavigate } from 'react-router-dom'
 import { useQueryState } from 'nuqs'
 import { ArrowLeft } from 'lucide-react'
 import { useMovieDetail } from '@/lib/queries/use-movie-detail'
-import { MoviePoster } from '@/components/shared/movie-poster'
+import { MoviePoster } from '@/components/shared'
 import { MovieDetailInfo } from '@/features/movie/components/movie-detail-info'
-import { Loader } from '@/components/ui/loader'
-import { Button } from '@/components/ui/button'
+import { Loader, Button } from '@/components/ui'
 
 const pageStyles = {
   layout: 'flex flex-col gap-6',

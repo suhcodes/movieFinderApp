@@ -1,7 +1,6 @@
 import { Award, Flame, Star } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Separator } from '@/components/ui/separator'
-import { DetailSection } from '@/components/ui/detail-section'
+import { Separator, DetailSection } from '@/components/ui'
 import { MovieInfoRow } from '@/features/movie/components/movie-info-row'
 import { MovieRatingCard } from '@/features/movie/components/movie-rating-card'
 import { MovieMetaRow } from '@/features/movie/components/movie-meta-row'

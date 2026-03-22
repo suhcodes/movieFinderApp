@@ -1,5 +1,4 @@
-import { Loader } from '@/components/ui/loader'
-import { Pagination } from '@/components/ui/pagination'
+import { Loader, Pagination } from '@/components/ui'
 import type { Movie } from '@/features/movie/types'
 import { MovieResultItem } from './movie-result-item'
 

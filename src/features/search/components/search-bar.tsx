@@ -1,6 +1,6 @@
 import { type FormEvent } from 'react'
 import { cn } from '@/lib/utils'
-import { SearchInput } from '@/components/ui/search-input'
+import { SearchInput } from '@/components/ui'
 
 interface SearchBarProps {
   value: string

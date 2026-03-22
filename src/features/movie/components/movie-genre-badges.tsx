@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils'
-import { Badge } from '@/components/ui/badge'
+import { Badge } from '@/components/ui'
 
 const rowStyles = {
   layout: 'flex flex-wrap gap-2',
