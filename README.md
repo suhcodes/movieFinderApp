@@ -1,14 +1,10 @@
 <div align="center">
 
-<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
-  <rect width="80" height="80" rx="18" fill="#ffffff"/>
-  <polygon points="30,22 62,40 30,58" fill="#000000"/>
-</svg>
-
 # moovle
 
 A movie search and detail app built with React 19, TypeScript, and Vite. Powered by the [OMDB API](https://www.omdbapi.com/).
 
+<img src="public/app.png" alt="moovle app screenshot" width="500" style="border-radius: 10px" />
 </div>
 
 ## Features
