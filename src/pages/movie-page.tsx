@@ -20,7 +20,11 @@ const contentStyles = {
 }
 
 const posterWrapperStyles = {
-  layout: 'shrink-0 mx-auto',
+  layout: 'w-[300px] shrink-0 mx-auto md:mx-0',
+}
+
+const posterStyles = {
+  width: 'mx-none',
 }
 
 const join = (styles: Record<string, string>) => Object.values(styles).join(' ')
@@ -63,7 +67,11 @@ export function MoviePage() {
           <MovieSeo movie={movie} />
           <div className={cn(join(contentStyles), 'animate-card-enter')}>
             <div className={join(posterWrapperStyles)}>
-              <MoviePoster posterPath={movie.posterPath} title={movie.title} />
+              <MoviePoster
+                posterPath={movie.posterPath}
+                title={movie.title}
+                className={join(posterStyles)}
+              />
             </div>
             <MovieDetailInfo movie={movie} />
           </div>
