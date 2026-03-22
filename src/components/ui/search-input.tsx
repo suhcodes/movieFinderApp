@@ -8,7 +8,7 @@ const searchInputStyles = {
   border: 'border-0',
   background: 'bg-transparent',
   spacing: 'p-0',
-  typography: 'text-sm',
+  typography: 'text-base sm:text-sm',
   interaction: 'outline-none',
   placeholder: 'placeholder:text-muted-foreground',
   focus: 'focus-visible:ring-0',
