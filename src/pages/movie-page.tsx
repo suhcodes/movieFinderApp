@@ -20,7 +20,7 @@ const contentStyles = {
 }
 
 const posterWrapperStyles = {
-  layout: 'w-[150px] mx-auto md:w-[300px] shrink-0',
+  layout: 'shrink-0 mx-auto',
 }
 
 const join = (styles: Record<string, string>) => Object.values(styles).join(' ')
