@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQueryState } from 'nuqs'
 import { Logo } from '@/components/shared/logo'
-import { SearchBar } from '@/features/movies/components/search-bar'
+import { SearchBar } from '@/features/search/components/search-bar'
 import { useDebounce } from '@/lib/hooks/use-debounce'
 
 export function AppHeader() {

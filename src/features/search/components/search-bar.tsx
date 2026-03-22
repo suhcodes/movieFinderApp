@@ -26,7 +26,7 @@ export function SearchBar({
     <form onSubmit={handleSubmit}>
       <SearchInput
         className={cn(
-          'h-12 max-w-lg w-full rounded-full border border-border bg-transparent px-5 dark:bg-input/30',
+          'h-12 max-w-lg w-full sm:w-[80vw] rounded-full border border-border bg-transparent px-5 dark:bg-input/30',
           className,
         )}
         placeholder={placeholder}

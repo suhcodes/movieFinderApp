@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { Movie } from '@/features/movies/types'
+import type { Movie } from '@/features/movie/types'
 
 interface MovieStore {
   moviesById: Record<string, Movie>

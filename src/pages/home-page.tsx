@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Logo } from '@/components/shared/logo'
-import { SearchBar } from '@/features/movies/components/search-bar'
+import { SearchBar } from '@/features/search/components/search-bar'
 import { Button } from '@/components/ui/button'
 
 export function HomePage() {

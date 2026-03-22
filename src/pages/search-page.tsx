@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { useQueryState } from 'nuqs'
-import { MovieResultList } from '@/features/movies/components/movie-result-list'
+import { MovieResultList } from '@/features/search/components/movie-result-list'
 import { useMovieSearch } from '@/lib/queries/use-movie-search'
 import { useMinLoading } from '@/lib/hooks/use-min-loading'
 

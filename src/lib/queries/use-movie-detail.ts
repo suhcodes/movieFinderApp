@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { moviesApi } from '@/features/movies/services/movies-api'
+import { movieApi } from '@/features/movie/services/movie-api'
 import { useMovieStore } from '@/lib/stores/movie-store'
 import { movieKeys } from './movie-keys'
 
@@ -10,7 +10,7 @@ export function useMovieDetail(id: string) {
   return useQuery({
     queryKey: movieKeys.detail(id),
     queryFn: async () => {
-      const movie = await moviesApi.getById(id)
+      const movie = await movieApi.getById(id)
       setMovie(movie)
       return movie
     },

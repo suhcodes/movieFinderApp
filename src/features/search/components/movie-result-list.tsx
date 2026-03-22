@@ -1,6 +1,6 @@
 import { Loader } from '@/components/ui/loader'
 import { Pagination } from '@/components/ui/pagination'
-import type { Movie } from '@/features/movies/types'
+import type { Movie } from '@/features/movie/types'
 import { MovieResultItem } from './movie-result-item'
 
 interface MovieResultListProps {

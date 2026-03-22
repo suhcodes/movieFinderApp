@@ -7,7 +7,3 @@ export interface Movie {
   overview?: string
   voteAverage?: number
 }
-export interface MovieFilters {
-  query: string
-  page: number
-}
