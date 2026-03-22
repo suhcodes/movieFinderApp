@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { env } from '@/lib/env'
+import { resolveApiError } from '@/lib/api/api-error'
 
 export const apiClient = axios.create({
   baseURL: env.apiBaseUrl,
@@ -16,5 +17,5 @@ apiClient.interceptors.request.use((config) => {
 
 apiClient.interceptors.response.use(
   (response) => response,
-  (error: unknown) => Promise.reject(error),
+  (error: unknown) => Promise.reject(resolveApiError(error)),
 )

@@ -1,5 +1,5 @@
 import { apiClient } from '@/lib/api/client'
-import { assertOmdbSuccess } from '@/lib/api/omdb-error'
+import { resolveApiError } from '@/lib/api/api-error'
 import type { Movie } from '@/features/movie/types'
 import { omdbDetailResponseSchema } from '../schemas/movie-schemas'
 
@@ -12,7 +12,10 @@ export const movieApi = {
       params: { i: id, plot: 'full', r: 'json' },
     })
     const parsed = omdbDetailResponseSchema.parse(data)
-    assertOmdbSuccess(parsed)
+
+    if (parsed.Response === 'False') {
+      throw resolveApiError(404)
+    }
 
     const rtRating = parsed.Ratings?.find((r) => r.Source === 'Rotten Tomatoes')
 

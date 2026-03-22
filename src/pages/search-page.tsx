@@ -3,6 +3,7 @@ import { useQueryState } from 'nuqs'
 import { MovieResultList } from '@/features/search/components/movie-result-list'
 import { useMovieSearch } from '@/lib/queries/use-movie-search'
 import { useMinLoading } from '@/lib/hooks/use-min-loading'
+import { ErrorDisplay } from '@/components/shared'
 
 export function SearchPage() {
   const [q] = useQueryState('q', { defaultValue: '' })
@@ -20,13 +21,7 @@ export function SearchPage() {
   const totalPages = Math.ceil((data?.total ?? 0) / 10)
 
   if (isError) {
-    return (
-      <div className="mx-auto w-full px-8 py-6">
-        <p className="text-sm text-destructive">
-          {error instanceof Error ? error.message : 'Something went wrong.'}
-        </p>
-      </div>
-    )
+    return <ErrorDisplay {...error} />
   }
 
   return (

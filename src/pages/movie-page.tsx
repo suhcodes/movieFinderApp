@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useQueryState } from 'nuqs'
 import { ArrowLeft } from 'lucide-react'
 import { useMovieDetail } from '@/lib/queries/use-movie-detail'
-import { MoviePoster } from '@/components/shared'
+import { MoviePoster, ErrorDisplay } from '@/components/shared'
 import { MovieDetailInfo } from '@/features/movie/components/movie-detail-info'
 import { Loader, Button } from '@/components/ui'
 
@@ -35,11 +35,7 @@ export function MoviePage() {
   }
 
   if (isError) {
-    return (
-      <div className="flex flex-1 items-center justify-center text-destructive text-sm">
-        {error instanceof Error ? error.message : 'Failed to load movie.'}
-      </div>
-    )
+    return <ErrorDisplay {...error} />
   }
 
   return (

@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
-export const omdbDetailResponseSchema = z.object({
+const omdbDetailSuccessSchema = z.object({
+  Response: z.literal('True'),
   Title: z.string(),
   Year: z.string(),
   imdbID: z.string(),
@@ -23,8 +24,17 @@ export const omdbDetailResponseSchema = z.object({
   Website: z.string().optional(),
   Metascore: z.string().optional(),
   Ratings: z.array(z.object({ Source: z.string(), Value: z.string() })).optional(),
-  Response: z.union([z.literal('True'), z.literal('False')]),
+})
+
+const omdbDetailErrorSchema = z.object({
+  Response: z.literal('False'),
   Error: z.string().optional(),
 })
 
+export const omdbDetailResponseSchema = z.discriminatedUnion('Response', [
+  omdbDetailSuccessSchema,
+  omdbDetailErrorSchema,
+])
+
 export type OmdbDetailResponse = z.infer<typeof omdbDetailResponseSchema>
+export type OmdbDetailSuccess = z.infer<typeof omdbDetailSuccessSchema>

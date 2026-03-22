@@ -1,9 +1,11 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { RootLayout } from '@/components/shared'
+import { Loader } from '@/components/ui'
 
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
+    HydrateFallback: Loader,
     children: [
       {
         path: '/',
