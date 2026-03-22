@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ImageOff } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 const posterContainerStyles = {
   layout: 'w-full aspect-[3/4] overflow-hidden',
@@ -16,13 +17,14 @@ const join = (styles: Record<string, string>) => Object.values(styles).join(' ')
 interface MoviePosterProps {
   posterPath: string | null
   title: string
+  className?: string
 }
 
-export function MoviePoster({ posterPath, title }: MoviePosterProps) {
+export function MoviePoster({ posterPath, title, className }: MoviePosterProps) {
   const [error, setError] = useState(false)
 
   return (
-    <div className={join(posterContainerStyles)}>
+    <div className={cn(join(posterContainerStyles), className)}>
       {posterPath && !error ? (
         <img
           src={posterPath}
