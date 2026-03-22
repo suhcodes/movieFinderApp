@@ -32,6 +32,7 @@ export const movieApi = {
       language: na(parsed.Language),
       country: na(parsed.Country),
       genres: parsed.Genre && parsed.Genre !== 'N/A' ? parsed.Genre.split(', ') : undefined,
+      rated: na(parsed.Rated),
       awards: na(parsed.Awards),
       director: na(parsed.Director),
       writers: na(parsed.Writer),

@@ -11,6 +11,7 @@ export interface Movie {
   language?: string
   country?: string
   genres?: string[]
+  rated?: string
   awards?: string
   director?: string
   writers?: string

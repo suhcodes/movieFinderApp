@@ -14,6 +14,7 @@ const omdbDetailSuccessSchema = z.object({
   Genre: z.string().optional(),
   Language: z.string().optional(),
   Country: z.string().optional(),
+  Rated: z.string().optional(),
   Awards: z.string().optional(),
   Director: z.string().optional(),
   Writer: z.string().optional(),

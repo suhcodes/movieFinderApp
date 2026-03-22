@@ -1,11 +1,12 @@
 import { Award, Flame, Star } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Separator, DetailSection } from '@/components/ui'
+import { Badge, Separator, DetailSection } from '@/components/ui'
 import { MovieInfoRow } from '@/features/movie/components/movie-info-row'
 import { MovieRatingCard } from '@/features/movie/components/movie-rating-card'
 import { MovieMetaRow } from '@/features/movie/components/movie-meta-row'
 import { MovieGenreBadges } from '@/features/movie/components/movie-genre-badges'
 import { MovieImdbRating } from '@/features/movie/components/movie-imdb-rating'
+import { MovieVotesAwards } from '@/features/movie/components/movie-votes-awards'
 import type { Movie } from '@/features/movie/types'
 
 const containerStyles = {
@@ -15,11 +16,6 @@ const containerStyles = {
 const titleStyles = {
   typography: 'text-2xl font-bold leading-tight',
   color: 'text-foreground',
-}
-
-const awardsStyles = {
-  typography: 'text-sm',
-  color: 'text-muted-foreground',
 }
 
 const overviewStyles = {
@@ -46,6 +42,7 @@ export function MovieDetailInfo({ movie, className }: MovieDetailInfoProps) {
     language,
     country,
     genres,
+    rated,
     voteAverage,
     votes,
     awards,
@@ -71,8 +68,13 @@ export function MovieDetailInfo({ movie, className }: MovieDetailInfoProps) {
       {/* Title */}
       <h1 className={join(titleStyles)}>{title}</h1>
 
-      {/* Metadata row: year · runtime · language · country */}
-      <MovieMetaRow parts={metaParts} />
+      <div className="flex md:flex-row flex-col gap-2">
+        {/* Rated badge */}
+        {rated && <Badge variant="outline">{rated}</Badge>}
+
+        {/* Metadata row: year · runtime · language · country */}
+        <MovieMetaRow parts={metaParts} />
+      </div>
 
       {/* Genre badges */}
       {genres && genres.length > 0 && <MovieGenreBadges genres={genres} />}
@@ -83,7 +85,7 @@ export function MovieDetailInfo({ movie, className }: MovieDetailInfoProps) {
       )}
 
       {/* Awards */}
-      {awards && <p className={join(awardsStyles)}>{awards}</p>}
+      {awards && <MovieVotesAwards awards={awards} />}
 
       <Separator />
 
