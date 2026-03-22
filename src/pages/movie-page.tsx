@@ -16,7 +16,7 @@ const pageStyles = {
 }
 
 const contentStyles = {
-  layout: 'flex flex-col md:flex-row gap-8 max-w-6xl m-auto',
+  layout: 'flex flex-col md:flex-row gap-8 max-w-6xl md:m-auto',
 }
 
 const posterWrapperStyles = {
