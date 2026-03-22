@@ -41,14 +41,20 @@ export function MoviePage() {
 
   if (!imdbID) {
     return (
-      <div className="flex flex-1 items-center justify-center text-muted-foreground">
-        Movie not found.
-      </div>
+      <>
+        <div className="flex flex-1 items-center justify-center text-muted-foreground">
+          Movie not found.
+        </div>
+      </>
     )
   }
 
   if (isError) {
-    return <ErrorDisplay {...error} />
+    return (
+      <>
+        <ErrorDisplay {...error} />
+      </>
+    )
   }
 
   return (
@@ -77,9 +83,11 @@ export function MoviePage() {
           </div>
         </>
       ) : (
-        <div className="flex flex-1 items-center justify-center text-muted-foreground">
-          Movie not found.
-        </div>
+        <>
+          <div className="flex flex-1 items-center justify-center text-muted-foreground">
+            Movie not found.
+          </div>
+        </>
       )}
     </div>
   )

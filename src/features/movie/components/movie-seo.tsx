@@ -8,13 +8,13 @@ interface MovieSeoProps {
 const FALLBACK_IMAGE = 'https://moovle.com.br/app.png'
 
 export function MovieSeo({ movie }: MovieSeoProps) {
-  const title = `${movie.title} (${movie.year})`
+  const title = `${movie.title} (${movie.year}) — moovle`
   const description = movie.overview ?? title
   const image = movie.posterPath ?? FALLBACK_IMAGE
 
   return (
     <Helmet>
-      <title>{title} — Movie Finder</title>
+      <title>{title}</title>
       <meta name="description" content={description} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />

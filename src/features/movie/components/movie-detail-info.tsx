@@ -28,7 +28,7 @@ const overviewStyles = {
 }
 
 const ratingCardsStyles = {
-  layout: 'flex gap-4',
+  layout: 'flex sm:flex-row flex-col gap-4',
 }
 
 const join = (styles: Record<string, string>) => Object.values(styles).join(' ')

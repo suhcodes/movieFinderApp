@@ -26,6 +26,7 @@ export function SearchPage() {
 
   return (
     <div className="mx-auto flex w-full flex-1 flex-col px-8 py-6">
+      <title>{q ? `${q} — moovle` : 'moovle'}</title>
       <MovieResultList
         movies={data?.movies ?? []}
         isLoading={showLoading}

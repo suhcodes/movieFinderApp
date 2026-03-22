@@ -18,6 +18,7 @@ export function HomePage() {
 
   return (
     <>
+      <title>moovle</title>
       <div className="flex-1" />
       <div className="flex flex-col items-center gap-7 p-4">
         <div style={{ viewTransitionName: 'moovle-logo' }}>
