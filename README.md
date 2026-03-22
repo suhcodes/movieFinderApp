@@ -1,75 +1,89 @@
-# React + TypeScript + Vite
+<div align="center">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
+  <rect width="80" height="80" rx="18" fill="#ffffff"/>
+  <polygon points="30,22 62,40 30,58" fill="#000000"/>
+</svg>
 
-Currently, two official plugins are available:
+# moovle
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+A movie search and detail app built with React 19, TypeScript, and Vite. Powered by the [OMDB API](https://www.omdbapi.com/).
 
-## React Compiler
+</div>
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## Features
 
-Note: This will impact Vite dev & build performances.
+- **Search movies** with debounced input — results update as you type
+- **Movie detail page** with full metadata: plot, cast, genre badges, ratings (IMDB, Rotten Tomatoes, Metacritic)
+- **Paginated results** for search queries
+- **Error handling** with a dedicated error display component
+- **Dark mode** by default
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Layer        | Tool                                   |
+| ------------ | -------------------------------------- |
+| UI           | React 19 + shadcn/ui + Tailwind CSS v4 |
+| Routing      | react-router-dom v7                    |
+| Server state | TanStack Query v5                      |
+| HTTP         | Axios                                  |
+| Validation   | Zod                                    |
+| URL state    | nuqs v2                                |
+| Build        | Vite + React Compiler                  |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### 1. Clone and install
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone https://github.com/suhcodes/movieFinderApp.git
+cd movieFinderApp
+pnpm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Set up environment variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+cp .env.example .env
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Add your OMDB API key to `.env`:
+
+```
+VITE_OMDB_API_KEY=your_api_key_here
+```
+
+Get a free key at [omdbapi.com](https://www.omdbapi.com/apikey.aspx).
+
+### 3. Run
+
+```bash
+pnpm dev
+```
+
+## Commands
+
+```bash
+pnpm dev      # Start dev server
+pnpm build    # Type-check + production build
+pnpm lint     # Run ESLint
+pnpm format   # Format all src files with Prettier
+pnpm preview  # Preview production build
+```
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── ui/           # shadcn primitives
+│   └── shared/       # Layout, header, footer, shared components
+├── features/
+│   ├── movie/        # Movie detail — types, services, schemas, components
+│   └── search/       # Movie search — types, services, schemas, components
+├── lib/
+│   ├── api/          # Axios instance + error handling
+│   ├── hooks/        # Shared custom hooks
+│   └── queries/      # TanStack Query hooks + key factories
+└── pages/            # Route-level components
 ```
