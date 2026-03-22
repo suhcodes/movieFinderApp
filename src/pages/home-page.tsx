@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import { Logo } from '@/components/shared'
 import { SearchBar } from '@/features/search/components/search-bar'
 import { Button } from '@/components/ui'
+import { useLuckyMovie } from '@/lib/hooks/use-lucky-movie'
 
 export function HomePage() {
   const [query, setQuery] = useState('')
   const navigate = useNavigate()
+  const navigateToLuckyMovie = useLuckyMovie()
 
   function handleSearch() {
     if (query.trim()) {
@@ -31,7 +33,7 @@ export function HomePage() {
         </div>
         <div className="flex items-center gap-4">
           <Button onClick={handleSearch}>Moovle Search</Button>
-          <Button onClick={handleSearch}>I&apos;m Feeling Lucky</Button>
+          <Button onClick={navigateToLuckyMovie}>I&apos;m Feeling Lucky</Button>
         </div>
       </div>
       <div className="flex-1" />
