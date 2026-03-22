@@ -176,6 +176,85 @@ src/
 - **Single responsibility**: each component does one thing — UI, state, or orchestration, never all three
 - **Co-locate types**: for small components, keep the type in the same file; move to `types.ts` when shared
 
+### Named Layout Regions (Rule 5)
+
+Header, footer, sidebar, and other named regions must be their own files in `src/components/shared/`. The layout wrapper only decides when and where to render regions — it never contains their markup inline.
+
+```tsx
+// ❌
+function RootLayout() {
+  return (
+    <div>
+      <header className="flex h-16 ...">
+        <Logo /><SearchBar />
+      </header>
+      <Outlet />
+      <footer className="flex justify-center ...">
+        <p>© 2026 Moovle</p>
+      </footer>
+    </div>
+  )
+}
+
+// ✅
+// src/components/shared/app-header.tsx  →  export function AppHeader() { ... }
+// src/components/shared/app-footer.tsx  →  export function AppFooter() { ... }
+
+function RootLayout() {
+  return (
+    <div>
+      {isSearch && <AppHeader />}
+      <Outlet />
+      <AppFooter />
+    </div>
+  )
+}
+```
+
+### Feature Component Decomposition (Rule 6)
+
+When a feature component contains two or more visually distinct, independently meaningful sections, each section must be its own component.
+
+**A section should be extracted when it:**
+- Has its own internal logic (date formatting, conditional rendering)
+- Maps to a clear UI concept ("the poster", "the description", "the metadata row")
+- Could be replaced or reused independently
+
+```tsx
+// ❌ — poster + description + metadata all in one component
+function MovieResultItem({ movie }) {
+  const year = new Date(movie.releaseDate).getFullYear()
+  const rating = movie.voteAverage.toFixed(1)
+  return (
+    <div>
+      <div className="h-[170px] w-[120px]">
+        {movie.posterPath ? <img ... /> : <div>No image</div>}
+      </div>
+      <div>
+        <h2>{movie.title}</h2>
+        <p>{movie.overview}</p>
+        <span><Star />{rating} · {year}</span>
+      </div>
+    </div>
+  )
+}
+
+// ✅ — each visual section extracted
+function MovieResultItem({ movie }) {
+  return (
+    <div className="flex gap-5 ...">
+      <MoviePoster posterPath={movie.posterPath} title={movie.title} />
+      <MovieDescription
+        title={movie.title}
+        overview={movie.overview}
+        voteAverage={movie.voteAverage}
+        releaseDate={movie.releaseDate}
+      />
+    </div>
+  )
+}
+```
+
 ### Styling
 
 - Use `cn()` from `@/lib/utils` (clsx + tailwind-merge) for all conditional class merging
@@ -199,23 +278,100 @@ const card = cva("rounded-lg border", {
 
 The app defaults to dark mode. The `dark` class is set statically on the `<html>` element in `index.html`. The dark variant is defined as `&:is(.dark *)` in `index.css` — all dark styles depend on this class being present on an ancestor.
 
-### Component Style Objects
+### Component Style Objects (Rules 1 – 4)
 
-UI primitives (e.g. `Button`, `Card`) define their styles as plain objects with semantic keys before passing them to `cva` or `cn`. This makes each style concern explicit and easy to extend:
+#### Rule 1 — Style objects are mandatory for all `src/components/ui/` components
+
+Every component in `src/components/ui/` must define its Tailwind classes as a named style object with semantic keys, flattened via `join`. A monolithic class string is never acceptable in this directory.
 
 ```ts
-const buttonBaseStyles = {
-  layout: 'inline-flex items-center justify-center',
+// ✅
+const inputBaseStyles = {
+  layout: 'h-8 w-full min-w-0',
   shape: 'rounded-lg',
-  interaction: 'transition-all outline-none select-none active:translate-y-px',
+  border: 'border border-input',
   // ...
+}
+const join = (styles: Record<string, string>) => Object.values(styles).join(' ')
+
+function Input({ className, ...props }) {
+  return <InputPrimitive className={cn(join(inputBaseStyles), className)} {...props} />
+}
+
+// ❌
+function Input({ className, ...props }) {
+  return <InputPrimitive className={cn('h-8 w-full min-w-0 rounded-lg border border-input ...', className)} {...props} />
 }
 ```
 
-Use a `join` helper to flatten the object into a class string:
+#### Rule 2 — Use this exact set of semantic key names
+
+Never invent new names for these concerns. Only include keys that are needed — omit empty ones.
+
+| Key | Covers |
+|-----|--------|
+| `layout` | display, sizing, flex/grid |
+| `shape` | border-radius |
+| `border` | border width and color |
+| `background` | `bg-*` |
+| `spacing` | padding, gap |
+| `typography` | font size, weight, line-height |
+| `interaction` | transitions, outline, cursor, select |
+| `placeholder` | `placeholder:*` |
+| `focus` | `focus-visible:*` |
+| `disabled` | `disabled:*` |
+| `invalid` | `aria-invalid:*` |
+| `file` | `file:*` (file input only) |
+| `dark` | ALL `dark:*` overrides — including `dark:hover:`, `dark:disabled:`, `dark:aria-invalid:` — never scatter dark variants into other keys |
+
+#### Rule 3 — Every `src/components/ui/` component must accept a `className` prop
+
+Pass it to `cn()` as the last argument so consumers can override defaults. A UI primitive without `className` is rigid and will require a retrofit the first time it's used in a different layout context.
 
 ```ts
-const join = (styles: Record<string, string>) => Object.values(styles).join(' ')
+// ✅
+function Input({ className, ...props }: React.ComponentProps<'input'>) {
+  return <InputPrimitive className={cn(join(inputBaseStyles), className)} {...props} />
+}
+
+// ❌
+function Input(props: React.ComponentProps<'input'>) {
+  return <InputPrimitive className={join(inputBaseStyles)} {...props} />
+}
+```
+
+#### Rule 4 — Two or more elements that always appear together become one compound primitive
+
+If two or more UI elements are always rendered together as a unit, extract them into a single compound component in `src/components/ui/`. Never assemble the same combination inline in feature components.
+
+**Trigger:** you write the same element grouping more than once outside `src/components/ui/`.
+
+```tsx
+// ❌ — pairing assembled inline inside a feature component
+function SearchBar() {
+  return (
+    <div>
+      <Search className="h-5 w-5 text-muted-foreground" />
+      <Input ... />
+    </div>
+  )
+}
+
+// ✅ — compound primitive owns the combination
+// src/components/ui/search-input.tsx
+function SearchInput({ className, ...props }) {
+  return (
+    <div className={cn('flex items-center gap-3', className)}>
+      <Search className="h-5 w-5 shrink-0 text-muted-foreground" />
+      <InputPrimitive ... {...props} />
+    </div>
+  )
+}
+
+// Feature component only uses SearchInput
+function SearchBar() {
+  return <form><SearchInput ... /></form>
+}
 ```
 
 ### Button Variant Keys

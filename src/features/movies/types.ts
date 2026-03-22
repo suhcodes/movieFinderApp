@@ -1,10 +1,11 @@
 export interface Movie {
   id: string
   title: string
-  overview: string
-  releaseDate: string
+  year: string
   posterPath: string | null
-  voteAverage: number
+  type?: string
+  overview?: string
+  voteAverage?: number
 }
 export interface MovieFilters {
   query: string

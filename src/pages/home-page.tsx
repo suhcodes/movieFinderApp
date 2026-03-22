@@ -1,35 +1,35 @@
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { Logo } from '@/components/shared/logo'
+import { SearchBar } from '@/features/movies/components/search-bar'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
 
 export function HomePage() {
+  const [query, setQuery] = useState('')
+  const navigate = useNavigate()
+
+  function handleSearch() {
+    if (query.trim()) {
+      navigate(`/search?q=${encodeURIComponent(query.trim())}`, { viewTransition: true })
+    }
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-8">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-xl">Find Your Next Movie</CardTitle>
-          <CardDescription>
-            Discover films by title, genre, or mood. Search from thousands of movies and build your
-            personal watchlist.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground text-sm">
-            Browse trending releases, explore top-rated classics, or search for something specific.
-            Your perfect movie is just a search away.
-          </p>
-        </CardContent>
-        <CardFooter className="gap-2">
-          <Button>Browse Movies</Button>
-          <Button variant="outline">View Watchlist</Button>
-        </CardFooter>
-      </Card>
-    </div>
+    <>
+      <div className="flex-1" />
+      <div className="flex flex-col items-center gap-7">
+        <div style={{ viewTransitionName: 'moovle-logo' }}>
+          <Logo />
+        </div>
+        <div style={{ viewTransitionName: 'moovle-searchbar' }}>
+          <SearchBar value={query} onChange={setQuery} onSearch={handleSearch} />
+        </div>
+        <div className="flex items-center gap-4">
+          <Button onClick={handleSearch}>Moovle Search</Button>
+          <Button onClick={handleSearch}>I&apos;m Feeling Lucky</Button>
+        </div>
+      </div>
+      <div className="flex-1" />
+    </>
   )
 }

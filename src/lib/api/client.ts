@@ -6,7 +6,10 @@ export const apiClient = axios.create({
 })
 
 apiClient.interceptors.request.use((config) => {
-  // TODO: attach auth token from store
+  config.params = {
+    ...config.params,
+    apikey: import.meta.env.VITE_OMDB_API_KEY as string | undefined,
+  }
   return config
 })
 

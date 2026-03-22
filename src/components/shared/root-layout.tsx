@@ -1,13 +1,17 @@
-import type { ReactNode } from 'react'
+import { Outlet, useMatch } from 'react-router-dom'
+import { AppHeader } from '@/components/shared/app-header'
+import { AppFooter } from '@/components/shared/app-footer'
 
-interface RootLayoutProps {
-  children: ReactNode
-}
+export function RootLayout() {
+  const isSearch = useMatch('/search')
 
-export function RootLayout({ children }: RootLayoutProps) {
   return (
     <div className="flex min-h-screen flex-col">
-      <main className="flex-1">{children}</main>
+      {isSearch && <AppHeader />}
+      <main className="flex flex-1 flex-col">
+        <Outlet />
+      </main>
+      <AppFooter />
     </div>
   )
 }
